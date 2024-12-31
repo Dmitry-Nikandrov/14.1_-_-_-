@@ -1,6 +1,5 @@
 import json
 import os
-
 from src.classes import Category, Product
 
 
@@ -28,11 +27,7 @@ def get_classes_from_json(data: list) -> list:
                     )
                 )
             category["products"] = prod_list
-            categories_list.append(
-                Category(
-                    category["name"], category["description"], category["products"]
-                )
-            )
+            categories_list.append(Category(category["name"], category["description"], category["products"]))
         return categories_list
     except Exception:
         return []
