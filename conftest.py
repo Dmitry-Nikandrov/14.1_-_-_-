@@ -1,9 +1,18 @@
 import pytest
-from src.classes import Category,Product
+
+from src.classes import Category, Product
+
 
 @pytest.fixture
 def mock_categories():
-    return [{"name": "Телевизоры","description": "Современный телевизор","products": [{"name": "55 QLED 4K","description": "Фоновая подсветка","price": 123000, "quantity": 7}]}]
+    return [
+        {
+            "name": "Телевизоры",
+            "description": "Современный телевизор",
+            "products": [{"name": "55 QLED 4K", "description": "Фоновая подсветка", "price": 123000, "quantity": 7}],
+        }
+    ]
+
 
 @pytest.fixture
 def product5():
@@ -16,7 +25,7 @@ def product6():
 
 
 @pytest.fixture
-def category6(product5, product6):
+def category3(product5, product6):
     return Category(
         "Плазмы",
         "Современный телевизор, который позволяет наслаждаться просмотром, станет вашим другом и помощником",
