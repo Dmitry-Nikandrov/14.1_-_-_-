@@ -57,17 +57,19 @@ def test_add_product(capsys):
     category1.products
     message = capsys.readouterr()
     assert message.out.strip() == (
-        "Samsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 5\n"
-        "Iphone 15, 210000.0 руб. Остаток: 8\n"
-        "Xiaomi Redmi Note 11, 31000.0 руб. Остаток: 14\n"
-        "new_name, new_price руб. Остаток: new_quantity"
+        "Samsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 5 шт.\n"
+        "Iphone 15, 210000.0 руб. Остаток: 8 шт.\n"
+        "Xiaomi Redmi Note 11, 31000.0 руб. Остаток: 14 шт.\n"
+        "new_name, new_price руб. Остаток: new_quantity шт."
     )
 
 
 def test_property_products(capsys, category3):
     category3.products
     message = capsys.readouterr()
-    assert message.out.strip() == ("50 QLED 7K, 123000.0 руб. Остаток: 3\n" "50 QLED 54K, 200000.0 руб. Остаток: 20")
+    assert message.out.strip() == (
+        "50 QLED 7K, 123000.0 руб. Остаток: 3 шт.\n" "50 QLED 54K, 200000.0 руб. Остаток: 20 шт."
+    )
 
 
 def test_property_price(product5):
