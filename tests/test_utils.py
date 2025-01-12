@@ -21,7 +21,7 @@ def test_get_classes_from_json_1(mock_categories):
 def test_get_classes_from_json_2(capsys, mock_categories):
     get_classes_from_json(mock_categories)[0].products
     message = capsys.readouterr()
-    assert message.out.strip() == "55 QLED 4K, 7 руб. Остаток: 123000"
+    assert message.out.strip() == "55 QLED 4K, 7 руб. Остаток: 123000 шт."
 
 
 def test_get_classes_from_json_4():
