@@ -1,12 +1,12 @@
 from abc import ABC, abstractmethod
 
 
+
 class BaseProduct(ABC):
 
     @abstractmethod
     def __str__(self):
         pass
-
 
 class PrintMixin:
     def __init__(self):
@@ -14,7 +14,6 @@ class PrintMixin:
 
     def __repr__(self):
         return f"{self.__class__.__name__}({self.name}, {self.description}, {self.price}, {self.quantity})"
-
 
 class Product(BaseProduct, PrintMixin):
     """создание класса Product"""
@@ -28,7 +27,12 @@ class Product(BaseProduct, PrintMixin):
         self.name = name
         self.description = description
         self.__price = price
-        self.quantity = quantity
+        if quantity == 0:
+            raise ValueError('Товар с нулевым количеством не может быть добавлен')
+        elif quantity <= 0:
+            raise ValueError()
+        else:
+            self.quantity = quantity
         super().__init__()
 
     def __str__(self):
@@ -99,6 +103,7 @@ class Category:
         Category.product_count += len(self.__products)
 
     def __str__(self):
+        'добавляет строковое представление экземпляров класса Category'
         total = 0
         for i in self.__products:
             total += i.quantity
@@ -114,6 +119,16 @@ class Category:
             except Exception as e:
                 print(f"Ошибка {e}. Проверьте наследственность добавляемых классов.")
 
+    def average_price(self):
+        "вычисляет среднюю цену товаров в категории"
+        try:
+            total_sum = sum([i.price for i in self.__products])
+            total_quantity = sum([i.quantity for i in self.__products])
+            return round(total_sum/total_quantity,2)
+        except ZeroDivisionError as e:
+            print('В категории отсутствуют товары')
+            return 0
+
     @property
     def products(self):
         """выводит в консоль значение приватного атрибута products"""
@@ -121,3 +136,5 @@ class Category:
         for i in self.__products:
             print(f"{str(i)}")
         return expected
+
+

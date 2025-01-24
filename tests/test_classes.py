@@ -1,5 +1,7 @@
 from unittest.mock import patch
 
+import pytest
+
 from src.classes import Category, Product
 
 
@@ -7,6 +9,10 @@ def test_product_init(product5):
     assert product5.name == "50 QLED 7K"
     assert product5.description == "Фоновая подсветка"
     assert product5.quantity == 3
+    with pytest.raises(ValueError):
+        Product("Samsung ", "256 камера", 180000.0, quantity=-5)
+    with pytest.raises(ValueError):
+        Product("Samsung ", "256 камера", 180000.0, quantity=0)
 
 
 def test_categories_init(category3):
@@ -37,10 +43,10 @@ def test_product_2(product2):
 
 
 def test_classmethod_new_product():
-    example_Product = Product.new_product(["new_name", "new_description", "new_price", "new_quantity"])
+    example_Product = Product.new_product(["new_name", "new_description", "new_price", 10])
     assert example_Product.name == "new_name"
     assert example_Product.description == "new_description"
-    assert example_Product.quantity == "new_quantity"
+    assert example_Product.quantity == 10
 
 
 def test_property_price_1(product6):
@@ -52,7 +58,7 @@ def test_property_price_2(product5):
 
 
 def test_add_product(capsys, category1):
-    example_Product = Product.new_product(["new_name", "new_description", "new_price", "new_quantity"])
+    example_Product = Product.new_product(["new_name", "new_description", "new_price", 10])
     category1.add_product(example_Product)
     category1.products
     message = capsys.readouterr()
@@ -61,11 +67,11 @@ def test_add_product(capsys, category1):
         "5)\n"
         "Product(Iphone 15, 512GB, Gray space, 210000.0, 8)\n"
         "Product(Xiaomi Redmi Note 11, 1024GB, Синий, 31000.0, 14)\n"
-        "Product(new_name, new_description, new_price, new_quantity)\n"
+        "Product(new_name, new_description, new_price, 10)\n"
         "Samsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 5 шт.\n"
         "Iphone 15, 210000.0 руб. Остаток: 8 шт.\n"
         "Xiaomi Redmi Note 11, 31000.0 руб. Остаток: 14 шт.\n"
-        "new_name, new_price руб. Остаток: new_quantity шт."
+        "new_name, new_price руб. Остаток: 10 шт."
     )
 
 
@@ -112,3 +118,11 @@ def test_price_setter_4(capsys, product5):
 def test_price_setter_5(capsys, product5):
     product5.price = 80000
     assert product5.price == 123000
+
+
+def test_average_price(category3,product5,product6):
+    assert category3.average_price() == 14043.48
+    assert Category(
+        "Плазмы",
+        "Современный телевизор, который позволяет наслаждаться просмотром, станет вашим другом и помощником",
+        []).average_price() == 0

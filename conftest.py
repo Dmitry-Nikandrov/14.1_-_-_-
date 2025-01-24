@@ -109,3 +109,8 @@ class BadClass:
 @pytest.fixture
 def bad_class():
     return BadClass("new", "new", 100, 15)
+
+
+''
+
+print(category3)
