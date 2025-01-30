@@ -12,6 +12,12 @@ class Product:
         self.__price = price
         self.quantity = quantity
 
+    def __str__(self):
+        return f"{self.name}, {self.__price} руб. Остаток: {self.quantity} шт."
+
+    def __add__(self, other):
+        return self.quantity * self.__price + other.quantity * other.price
+
     @classmethod
     def new_product(cls, prod_list: list):
         name, description, price, quantity = prod_list
@@ -53,6 +59,12 @@ class Category:
         Category.total_categories += 1
         Category.total_products += len(self.__products)
 
+    def __str__(self):
+        total = 0
+        for i in self.__products:
+            total += i.quantity
+        return f"{self.name}, количество продуктов: {total} шт."
+
     def add_product(self, product):
         """добавляет новый продукт в приватный атрибут products"""
         if product is True or product is not None:
@@ -64,7 +76,7 @@ class Category:
         """выводит в консоль значение приватного атрибута products"""
         expected = ""
         for i in self.__products:
-            print(f"{i.name}, {i.price} руб. Остаток: {i.quantity}")
+            print(f"{str(i)}")
         return expected
 
 
@@ -117,3 +129,4 @@ category2 = Category(
 
 product6 = Product("55!!!!!!!!! QLED 4K", "Фоновая подсветка", -2, 1)
 product7 = Product("55&&&&&&&&&& QLED 4K", "Фоновая подсветка", 100, 1)
+# print(str(category1))
